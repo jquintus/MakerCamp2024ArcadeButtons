@@ -35,4 +35,6 @@ a volume knob based off of Adafruit's feather boards.
 
 # Useful Tutorials
 
-* Using the [Adafruit I2C QT Rotary Encoder](https://learn.adafruit.com/adafruit-i2c-qt-rotary-encoder/python-circuitpython) 
+* [Welcome to CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/overview) 
+* [Adafruit I2C QT Rotary Encoder](https://learn.adafruit.com/adafruit-i2c-qt-rotary-encoder/python-circuitpython) 
+* [Introducing Adafruit Feather RP2040](https://learn.adafruit.com/adafruit-feather-rp2040-pico/overview)
