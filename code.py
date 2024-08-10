@@ -2,8 +2,18 @@
 Feather RP2040 to act like a keyboard with 4 buttons and a volume knob."""
 
 
+import time
 import board
 from adafruit_seesaw import seesaw, rotaryio, digitalio
+
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
+from adafruit_hid.keycode import Keycode
+from adafruit_hid.consumer_control_code import ConsumerControlCode
+from adafruit_hid.consumer_control import ConsumerControl
+
+
 
 def init_rotary_encoder():
     i2c = board.I2C()  # uses board.SCL and board.SDA
@@ -23,7 +33,12 @@ def init_rotary_encoder():
 
     return encoder, button
 
+def init_hid():
+    cc = ConsumerControl(usb_hid.devices)
+    return cc
+
 (encoder, button) = init_rotary_encoder()
+cc = init_hid()
 BUTTON_HELD = False
 LAST_POSITION = encoder.position
 
@@ -34,15 +49,16 @@ while True:
 
     if (position_delta < 0):
         LAST_POSITION = position
+        cc.send(ConsumerControlCode.VOLUME_INCREMENT)
         print("Up")
     elif (position_delta > 0):
         LAST_POSITION = position
+        cc.send(ConsumerControlCode.VOLUME_DECREMENT)
         print("down")
 
     if not button.value and not BUTTON_HELD:
         BUTTON_HELD = True
-        print("Button pressed")
+        cc.send(ConsumerControlCode.PLAY_PAUSE)
 
     if button.value and BUTTON_HELD:
         BUTTON_HELD = False
-        print("Button released")
