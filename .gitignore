@@ -1,0 +1,8 @@
+# All of the default files on the usb drive
+.fseventsd/**
+.metadata_never_index
+.Trashes
+.Trash-1000
+settings.toml
+boot_out.txt
+System\ Volume\ Information
