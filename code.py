@@ -25,11 +25,19 @@ button = digitalio.DigitalIO(seesaw, 24)
 BUTTON_HELD = False
 
 encoder = rotaryio.IncrementalEncoder(seesaw)
-LAST_POSITION = None
+LAST_POSITION = encoder.position
 
 while True:
     # negate the position to make clockwise rotation positive
-    position = -encoder.position
+    position = encoder.position
+    position_delta = LAST_POSITION - position
+
+    if (position_delta < 0):
+        LAST_POSITION = position
+        print("Up")
+    elif (position_delta > 0):
+        LAST_POSITION = position
+        print("down")
 
     if position != LAST_POSITION:
         LAST_POSITION = position
@@ -42,4 +50,3 @@ while True:
     if button.value and BUTTON_HELD:
         BUTTON_HELD = False
         print("Button released")
-
