@@ -40,16 +40,30 @@ while True:
 
     if (position_delta < 0):
         LAST_POSITION = position
-        cc.send(ConsumerControlCode.VOLUME_INCREMENT)
+        cmd = ConsumerControlCode.VOLUME_INCREMENT
+        cc.send(cmd)
         print("Up")
+
     elif (position_delta > 0):
         LAST_POSITION = position
-        cc.send(ConsumerControlCode.VOLUME_DECREMENT)
+        cmd = ConsumerControlCode.VOLUME_DECREMENT
+        cc.send(cmd)
         print("down")
 
     if not button.value and not BUTTON_HELD:
         BUTTON_HELD = True
-        cc.send(ConsumerControlCode.PLAY_PAUSE)
+        #cmd = ConsumerControlCode.BRIGHTNESS_DECREMENT         # Decrease the monitor brightness
+        #cmd = ConsumerControlCode.BRIGHTNESS_INCREMENT         # Increase the monitor brightness
+        #cmd = ConsumerControlCode.EJECT                        # No impact when using Spotify
+        #cmd = ConsumerControlCode.FAST_FORWARD                 # Jump ahead 5 seconds
+        #cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
+        cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
+        #cmd = ConsumerControlCode.RECORD                       # No impact when using Spotify
+        #cmd = ConsumerControlCode.REWIND                       # No impact when using Spotify
+        #cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
+        #cmd = ConsumerControlCode.SCAN_PREVIOUS_TRACK          # Go to previous track
+        #cmd = ConsumerControlCode.STOP                         # Stop. Unlike Pause, this will not start playing again if pressed a second time
+        cc.send(cmd)
 
     if button.value and BUTTON_HELD:
         BUTTON_HELD = False
