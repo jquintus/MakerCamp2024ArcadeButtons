@@ -1,23 +1,15 @@
 """Main entry point for all CircuitPython Code. This script will enable a
 Feather RP2040 to act like a keyboard with 4 buttons and a volume knob."""
 
-
-import time
 import board
 from adafruit_seesaw import seesaw, rotaryio, digitalio
 
 import usb_hid
-from adafruit_hid.keyboard import Keyboard
-from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
-from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 from adafruit_hid.consumer_control import ConsumerControl
 
-
-
 def init_rotary_encoder():
     i2c = board.I2C()  # uses board.SCL and board.SDA
-    # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
     seesawBoard = seesaw.Seesaw(i2c, addr=0x36)
 
     seesaw_product = (seesawBoard.get_version() >> 16) & 0xFFFF
@@ -43,7 +35,6 @@ BUTTON_HELD = False
 LAST_POSITION = encoder.position
 
 while True:
-    # negate the position to make clockwise rotation positive
     position = encoder.position
     position_delta = LAST_POSITION - position
 
