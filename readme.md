@@ -18,15 +18,19 @@ First, install CircuitPython (see below).
 
 ## Install via github
 1. Plug the board into your computer
-2. Open up the command prompt and navigate to the CircuitPython drive
-3. Clone this repository
-4. The board will restart once this is done
-5. You can plug the device into any computer (including your cell phone) with a
+2. Delete everything from the device
+3. Open up the command prompt and navigate to the CircuitPython drive
+4. Clone this repository
+5. The board will restart once this is done
+6. You can plug the device into any computer (including your cell phone) with a
    USB cable and it should automatically work.
 
 ```batch
 cd d:\
-git clone https://github.com/jquintus/MakerCamp2024ArcadeButtons
+git init
+git remote add origin https://github.com/jquintus/MakerCamp2024ArcadeButtons
+git pull origin main
+git branch --set-upstream-to=origin/main main
 ```
 
 This will automatically download and install everything in this github
