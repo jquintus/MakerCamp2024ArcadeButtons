@@ -118,33 +118,53 @@ while True:
         button1_held = True
         led1.value = True
 
+        cmd = ConsumerControlCode.SCAN_PREVIOUS_TRACK          # Go to previous track
+        cc.send(cmd)
+        print ("Button 1 pressed")
+
     if button1.value and button1_held:
         button1_held = False
         led1.value = False
+        print ("Button 1 released")
 
     # Button 2
     if not button2.value and not button2_held:
         button2_held = True
         led2.value = True
 
+        cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
+        cc.send(cmd)
+        print ("Button 2 pressed")
+
     if button2.value and button2_held:
         button2_held = False
         led2.value = False
+        print ("Button 2 released")
 
     # Button 3
     if not button3.value and not button3_held:
         button3_held = True
         led3.value = True
 
+        cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
+        cc.send(cmd)
+        print ("Button 3 pressed")
+
     if button3.value and button3_held:
         button3_held = False
         led3.value = False
+        print ("Button 3 released")
 
     # Button 4
     if not button4.value and not button4_held:
         button4_held = True
         led4.value = True
 
+        cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
+        cc.send(cmd)
+        print ("Button 4 pressed")
+
     if button4.value and button4_held:
         button4_held = False
         led4.value = False
+        print ("Button 4 released")
