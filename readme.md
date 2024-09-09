@@ -68,3 +68,7 @@ repository, which includes all dependencies. The board will restart.
     * This is for differnt hardware, but the demo code should work pretty well.
 * [Adafruit HID Library](https://docs.circuitpython.org/projects/hid/en/latest/)
     * Useful for Keycodes and ConsumerControlCodes (Play/Pause, volume, etc)
+ 
+# Housing Diagrams
+## Data Sheet for Arcade Buttons
+![Data Sheet for Arcade Buttons](https://github.com/user-attachments/assets/26038298-0e7b-44b6-8844-da17a81cbcfe)
