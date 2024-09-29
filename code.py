@@ -42,9 +42,9 @@ def init_button(arcade_qt, pin):
 
     return button
 
-def init_buttons(i2c):
+def init_buttons(i2c, addr):
     print("Initializing leds and buttons...")
-    arcade_qt = seesaw.Seesaw(i2c, addr=0x3A)
+    arcade_qt = seesaw.Seesaw(i2c, addr)
 
     print("Initializing leds...")
     led1 = digitalio.DigitalIO(arcade_qt, 12)
@@ -68,7 +68,8 @@ def init_hid():
 i2c = init_i2c()
 cc = init_hid()
 (encoder, encoder_button) = init_rotary_encoder(i2c)
-((led1, led2, led3, led4), (button1, button2, button3, button4)) = init_buttons(i2c)
+((led1, led2, led3, led4), (button1, button2, button3, button4)) = init_buttons(i2c, addr=0x3A)
+((led5, led6, led7, led8), (button5, button6, button7, button8)) = init_buttons(i2c, addr=0x3B) # A0 Address Trace cut
 
 encoder_button_held = False
 LAST_POSITION = encoder.position
@@ -77,6 +78,11 @@ button1_held = False
 button2_held = False
 button3_held = False
 button4_held = False
+
+button5_held = False
+button6_held = False
+button7_held = False
+button8_held = False
 
 print("Ready to start")
 while True:
@@ -169,3 +175,60 @@ while True:
         button4_held = False
         led4.value = False
         print ("Button 4 released")
+    
+    # Button 5
+    if not button5.value and not button5_held:
+        button5_held = True
+        led5.value = True
+
+        cmd = ConsumerControlCode.STOP                         # Stop
+        cc.send(cmd)
+        print ("Button 5 pressed - Stop")
+
+    if button5.value and button5_held:
+        button5_held = False
+        led5.value = False
+        print ("Button 5 released")
+
+    # Button 6
+    if not button6.value and not button6_held:
+        button6_held = True
+        led6.value = True
+
+        cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
+        cc.send(cmd)
+        print ("Button 6 pressed - Play/Pause")
+
+    if button6.value and button6_held:
+        button6_held = False
+        led6.value = False
+        print ("Button 6 released")
+
+    # Button 7
+    if not button7.value and not button7_held:
+        button7_held = True
+        led7.value = True
+
+        cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
+        cc.send(cmd)
+        print ("Button 7 pressed - Skip Track")
+
+    if button7.value and button7_held:
+        button7_held = False
+        led7.value = False
+        print ("Button 7 released")
+
+    # Button 8
+    if not button8.value and not button8_held:
+        button8_held = True
+        led8.value = True
+
+        cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
+        cc.send(cmd)
+        print ("Button 8 pressed - Mute")
+
+    if button8.value and button8_held:
+        button8_held = False
+        led8.value = False
+        print ("Button 8 released")
+    
