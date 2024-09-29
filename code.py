@@ -67,10 +67,10 @@ def init_hid():
 
 i2c = init_i2c()
 cc = init_hid()
-(encoder, button) = init_rotary_encoder(i2c)
+(encoder, encoder_button) = init_rotary_encoder(i2c)
 ((led1, led2, led3, led4), (button1, button2, button3, button4)) = init_buttons(i2c)
 
-BUTTON_HELD = False
+encoder_button_held = False
 LAST_POSITION = encoder.position
 
 button1_held = False
@@ -95,23 +95,24 @@ while True:
         cc.send(cmd)
         print("down")
 
-    if not button.value and not BUTTON_HELD:
-        BUTTON_HELD = True
+    if not encoder_button.value and not encoder_button_held:
+        encoder_button_held = True
         #cmd = ConsumerControlCode.BRIGHTNESS_DECREMENT         # Decrease the monitor brightness
         #cmd = ConsumerControlCode.BRIGHTNESS_INCREMENT         # Increase the monitor brightness
         #cmd = ConsumerControlCode.EJECT                        # No impact when using Spotify
         #cmd = ConsumerControlCode.FAST_FORWARD                 # Jump ahead 5 seconds
-        #cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
-        cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
+        cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
+        #cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
         #cmd = ConsumerControlCode.RECORD                       # No impact when using Spotify
         #cmd = ConsumerControlCode.REWIND                       # No impact when using Spotify
         #cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
         #cmd = ConsumerControlCode.SCAN_PREVIOUS_TRACK          # Go to previous track
         #cmd = ConsumerControlCode.STOP                         # Stop. Unlike Pause, this will not start playing again if pressed a second time
         cc.send(cmd)
+        print ("Button 0 pressed - Mute")
 
-    if button.value and BUTTON_HELD:
-        BUTTON_HELD = False
+    if encoder_button.value and encoder_button_held:
+        encoder_button_held = False
 
     # Button 1
     if not button1.value and not button1_held:
@@ -120,7 +121,7 @@ while True:
 
         cmd = ConsumerControlCode.SCAN_PREVIOUS_TRACK          # Go to previous track
         cc.send(cmd)
-        print ("Button 1 pressed")
+        print ("Button 1 pressed - Previous Track")
 
     if button1.value and button1_held:
         button1_held = False
@@ -134,7 +135,7 @@ while True:
 
         cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
         cc.send(cmd)
-        print ("Button 2 pressed")
+        print ("Button 2 pressed - Play/Pause")
 
     if button2.value and button2_held:
         button2_held = False
@@ -148,7 +149,7 @@ while True:
 
         cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
         cc.send(cmd)
-        print ("Button 3 pressed")
+        print ("Button 3 pressed - Skip Track")
 
     if button3.value and button3_held:
         button3_held = False
@@ -162,7 +163,7 @@ while True:
 
         cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
         cc.send(cmd)
-        print ("Button 4 pressed")
+        print ("Button 4 pressed - Mute")
 
     if button4.value and button4_held:
         button4_held = False
