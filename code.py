@@ -169,5 +169,3 @@ while True:
         button4_held = False
         led4.value = False
         print ("Button 4 released")
-
-# NOOP
