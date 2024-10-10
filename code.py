@@ -69,15 +69,15 @@ i2c = init_i2c()
 cc = init_hid()
 (encoder, encoder_button) = init_rotary_encoder(i2c)
 ((led1, led2, led3, led4), (button1, button2, button3, button4)) = init_buttons(i2c, addr=0x3A)
-((led5, led6, led7, led8), (button5, button6, button7, button8)) = init_buttons(i2c, addr=0x3B) # A0 Address Trace cut
+((red_led, green_led, yellow_led, blue_led), (red_button, green_button, yellow_button, blue_button)) = init_buttons(i2c, 0x3A)
 
 encoder_button_held = False
 LAST_POSITION = encoder.position
 
-button1_held = False
-button2_held = False
-button3_held = False
-button4_held = False
+red_button_held = False
+green_button_held = False
+yellow_button_held = False
+blue_button_held = False
 
 button5_held = False
 button6_held = False
@@ -85,6 +85,26 @@ button7_held = False
 button8_held = False
 
 print("Ready to start")
+
+def flash_the_lights(value):
+    green_led.value = value
+    time.sleep(0.1)
+
+    blue_led.value = value
+    time.sleep(0.1)
+
+    yellow_led.value = value
+    time.sleep(0.1)
+
+    red_led.value = value
+
+
+flash_the_lights(True)
+time.sleep(0.1)
+flash_the_lights(False)
+
+
+
 while True:
     position = encoder.position
     position_delta = LAST_POSITION - position
@@ -120,115 +140,58 @@ while True:
     if encoder_button.value and encoder_button_held:
         encoder_button_held = False
 
-    # Button 1
-    if not button1.value and not button1_held:
-        button1_held = True
-        led1.value = True
+    # Red Button
+    if not red_button.value and not red_button_held:
+        red_button_held = True
+        red_led.value = True
 
         cmd = ConsumerControlCode.SCAN_PREVIOUS_TRACK          # Go to previous track
         cc.send(cmd)
-        print ("Button 1 pressed - Previous Track")
+        print ("Red button pressed - Previous Track")
 
-    if button1.value and button1_held:
-        button1_held = False
-        led1.value = False
-        print ("Button 1 released")
+    if red_button.value and red_button_held:
+        red_button_held = False
+        red_led.value = False
+        print ("Red button released")
 
-    # Button 2
-    if not button2.value and not button2_held:
-        button2_held = True
-        led2.value = True
-
-        cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
-        cc.send(cmd)
-        print ("Button 2 pressed - Play/Pause")
-
-    if button2.value and button2_held:
-        button2_held = False
-        led2.value = False
-        print ("Button 2 released")
-
-    # Button 3
-    if not button3.value and not button3_held:
-        button3_held = True
-        led3.value = True
-
-        cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
-        cc.send(cmd)
-        print ("Button 3 pressed - Skip Track")
-
-    if button3.value and button3_held:
-        button3_held = False
-        led3.value = False
-        print ("Button 3 released")
-
-    # Button 4
-    if not button4.value and not button4_held:
-        button4_held = True
-        led4.value = True
-
-        cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
-        cc.send(cmd)
-        print ("Button 4 pressed - Mute")
-
-    if button4.value and button4_held:
-        button4_held = False
-        led4.value = False
-        print ("Button 4 released")
-    
-    # Button 5
-    if not button5.value and not button5_held:
-        button5_held = True
-        led5.value = True
-
-        cmd = ConsumerControlCode.STOP                         # Stop
-        cc.send(cmd)
-        print ("Button 5 pressed - Stop")
-
-    if button5.value and button5_held:
-        button5_held = False
-        led5.value = False
-        print ("Button 5 released")
-
-    # Button 6
-    if not button6.value and not button6_held:
-        button6_held = True
-        led6.value = True
+    # Green button
+    if not green_button.value and not green_button_held:
+        green_button_held = True
+        green_led.value = True
 
         cmd = ConsumerControlCode.PLAY_PAUSE                   # Play or Pause
         cc.send(cmd)
-        print ("Button 6 pressed - Play/Pause")
+        print ("Green button pressed - Play/Pause")
 
-    if button6.value and button6_held:
-        button6_held = False
-        led6.value = False
-        print ("Button 6 released")
+    if green_button.value and green_button_held:
+        green_button_held = False
+        green_led.value = False
+        print ("Green button released")
 
-    # Button 7
-    if not button7.value and not button7_held:
-        button7_held = True
-        led7.value = True
+    # Button Yellow
+    if not yellow_button.value and not yellow_button_held:
+        yellow_button_held = True
+        yellow_led.value = True
 
         cmd = ConsumerControlCode.SCAN_NEXT_TRACK              # Skip to Next Track
         cc.send(cmd)
-        print ("Button 7 pressed - Skip Track")
+        print ("Yellow button pressed - Skip Track")
 
-    if button7.value and button7_held:
-        button7_held = False
-        led7.value = False
-        print ("Button 7 released")
+    if yellow_button.value and yellow_button_held:
+        yellow_button_held = False
+        yellow_led.value = False
+        print ("Yellow button released")
 
-    # Button 8
-    if not button8.value and not button8_held:
-        button8_held = True
-        led8.value = True
+    # Blue button
+    if not blue_button.value and not blue_button_held:
+        blue_button_held = True
+        blue_led.value = True
 
         cmd = ConsumerControlCode.MUTE                         # Mute/unmue audio
         cc.send(cmd)
-        print ("Button 8 pressed - Mute")
+        print ("Blue Button pressed - Mute")
 
-    if button8.value and button8_held:
-        button8_held = False
-        led8.value = False
-        print ("Button 8 released")
-    
+    if blue_button.value and blue_button_held:
+        blue_button_held = False
+        blue_led.value = False
+        print ("Blue button released")
