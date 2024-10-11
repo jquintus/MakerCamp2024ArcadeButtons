@@ -28,7 +28,7 @@ This is the project site for a custom keyboard with 4 arcade style buttons and a
     * [Blue](https://www.adafruit.com/product/3490)
 
 # How to Install
-First, install CircuitPython (see below) if it hasn't already been installed. If you got the device from Maker Camp, then it's already installed.
+First, install CircuitPython (see below) if it hasn't already been installed. **If you got the device from Maker Camp, then it's already installed.**
 
 ## Option 1: Install via github
 In order to install this code on to your device, you need to download the code from this site (all of the files that end in `.py`) and everything in the `lib` folder. 
